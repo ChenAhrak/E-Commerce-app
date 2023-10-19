@@ -5,7 +5,7 @@ import { Offers } from '../Components/Offers/Offers'
 import { NewCollections } from '../Components/NewCollections/NewCollections'
 import NewsLetter from '../Components/NewsLetter/NewsLetter'
 
-/////DFGdfgdgfd
+/////Tal Sheliii
 export const Shop = () => {
     return (
         <div>
@@ -14,7 +14,7 @@ export const Shop = () => {
             <Offers />
             <NewCollections />
             <NewsLetter />
-            
+
         </div>
     )
 }
