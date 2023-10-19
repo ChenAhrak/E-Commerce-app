@@ -1,0 +1,66 @@
+.news-letter {
+    width: 65%;
+    height: 40vh;
+    background: linear-gradient(180deg, #fde1ff, #e1ffea22 60%);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0px 140px;
+    margin: auto;
+
+}
+
+.news-letter h1 {
+    font-size: 45px;
+    font-weight: bold;
+
+}
+
+.news-letter p {
+    font-size: 20px;
+    margin-top: 60px;
+}
+
+.subscribe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.subscribe {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    width: 730px;
+    height: 70px;
+    border-radius: 80px;
+    border: 1px solid #e3e3e3
+}
+
+.subscribe input {
+    width: 500px;
+    height: 50px;
+    outline: none;
+    border: none;
+    color: #616161;
+    padding: 0px 20px;
+    font-size: 16px;
+    font-family: 'Poppins';
+    ;
+}
+
+.subscribe button {
+    width: 210px;
+    height: 70px;
+    outline: none;
+    border: none;
+    border-radius: 80px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
