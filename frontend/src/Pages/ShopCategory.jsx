@@ -3,18 +3,18 @@ import './CSS/ShopCategory.css'
 import { ShopContext } from '../Context/ShopContext'
 import Dropdown_Icon from '../Components/Assets/dropdown_icon.png'
 import { Item } from '../Components/Item/Item'
-import { ShopContextProvider } from '../Context/ShopContext'
+// import { ShopContextProvider } from '../Context/ShopContext'
 
 
 
 
 export const ShopCategory = (props) => {
 
-  const { All_Product } = useContext(ShopContext);
-  
+  const { all_product } = useContext(ShopContext);
+
   const categoryId = () => {
-   return All_Product ? (
-      All_Product.map((item) => {
+    return all_product ? (
+      all_product.map((item) => {
         if (item.category === props.category) {
           return (
             <Item
@@ -45,13 +45,13 @@ export const ShopCategory = (props) => {
           Sort by <img src={Dropdown_Icon} alt="drop-down" />
         </div>
       </div>
-        <div className="shop-category-products">
-          {categoryId()}
-        </div>
-        <div className="shop-category-loadmore">
-          Explore More
-        </div>
+      <div className="shop-category-products">
+        {categoryId()}
       </div>
+      <div className="shop-category-loadmore">
+        Explore More
+      </div>
+    </div>
 
   )
 
