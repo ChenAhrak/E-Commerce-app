@@ -63,7 +63,7 @@
 }
 
 .product-display-new-price {
-    color: #3b3939;
+    color: #181818;
 }
 
 .product-display-size p {
@@ -109,6 +109,7 @@
 
 .product-display-category {
     margin-top: 20px;
+    text-transform: capitalize;
 }
 
 .product-display-category span {

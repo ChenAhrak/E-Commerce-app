@@ -53,7 +53,7 @@ export const ProductDisplay = (props) => {
                 <button>
                     Add to Cart
                 </button>
-                <p className='product-display-category'><span>Category :</span> Men , Hoodie , Jogging </p>
+                <p className='product-display-category'><span>Category :</span> {product.category} , Hoodie , Jogging </p>
                 <p className='product-display-category'><span>Tags :</span> Modern , Latest </p>
             </div>
 
