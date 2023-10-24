@@ -12,6 +12,7 @@ const getDefaultCart = () => {
 }
 
 export const ShopContextProvider = (props) => {
+
     const [cartItems, setCartItems] = React.useState(getDefaultCart());
 
     const addToCart = (itemId) => {
@@ -41,9 +42,18 @@ export const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
+    const numberInCart = () => {
+        let iconNumber = 0;
+        for (const item in cartItems) {
+            if (cartItems[item] > 0) {
+                iconNumber += cartItems[item];
+            }
+        }
+        return iconNumber;
+    }
 
     return (
-        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart, getTotalsItemsAmount }}>
+        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart, getTotalsItemsAmount,numberInCart }}>
             {props.children}
         </ShopContext.Provider>
     )

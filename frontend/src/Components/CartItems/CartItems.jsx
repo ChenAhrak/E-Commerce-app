@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './CartItems.css'
 import { ShopContext } from '../../Context/ShopContext'
 import Remove_Icon from '../Assets/cart_cross_icon.png'
+import { Link } from 'react-router-dom'
 
 export default function CartItems() {
-    const { all_product, cartItems, removeFromCart, getTotalsItemsAmount } = useContext(ShopContext);
+    const { all_product, cartItems, removeFromCart, getTotalsItemsAmount } = React.useContext(ShopContext);
 
     const cartItemsDisplay = () => {
         return all_product ? (
@@ -13,7 +14,7 @@ export default function CartItems() {
                     return (
                         <div>
                             <div className="cart-items-format cart-items-format-main ">
-                                <img className="cart-items-product-icon" src={item.image} alt="" />
+                                <Link to={`/product/${item.id}`}><img className="cart-items-product-icon" src={item.image} alt="" /></Link>
                                 <p>{item.name}</p>
                                 <p>${item.new_price}</p>
                                 <button className='cart-items-quantity'>{cartItems[item.id]}</button>
