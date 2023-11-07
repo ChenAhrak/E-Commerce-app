@@ -4,12 +4,12 @@ import { Shop } from "./Pages/Shop";
 import { ShopCategory } from "./Pages/ShopCategory";
 import { Product } from "./Pages/Product";
 import { Cart } from "./Pages/Cart";
-import { LoginSignup } from "./Pages/LoginSignup";
+import { Signup } from "./Pages/SignUp";
 import { Footer } from "./Components/Footer/Footer";
 import Men_Banner from "./Components/Assets/banner_men.png";
 import Women_Banner from "./Components/Assets/banner_women.png";
 import Kids_Banner from "./Components/Assets/banner_kids.png";
-import { ShopContextProvider } from "./Context/ShopContext";
+import { Login } from "./Pages/Login";
 
 
 function App() {
@@ -36,7 +36,8 @@ function App() {
             <Route path=":productId" element={<Product />} />
           </Route>
           <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<LoginSignup />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
 
         <Footer />

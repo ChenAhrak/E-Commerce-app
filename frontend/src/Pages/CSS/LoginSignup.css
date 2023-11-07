@@ -3,9 +3,18 @@
     height: 80vh;
     background: #fce3fe;
     padding-top: 100px;
+    padding-bottom: 100px;
 }
 
 .loginsignup-container {
+    width: 580px;
+    height: 600px;
+    background: white;
+    margin: auto;
+    padding: 40px 60px;
+}
+
+.loginsignup-container-login{
     width: 580px;
     height: 600px;
     background: white;

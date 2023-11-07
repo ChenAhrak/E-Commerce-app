@@ -11,22 +11,22 @@ export const Navbar = () => {
     const { numberInCart } = React.useContext(ShopContext);
 
     return (
-        <div className='navbar'>
-            <div className='nav-logo-title'>
-                <img src={Logo} alt="shopper-logo" className="nav-logo" />
-                <p className="nav-title">SHOPPER</p>
-            </div>
+        <div class='navbar'>
+            <Link to={'/'} style={{ textDecoration: 'none' }}><div onClick={() => setMenu("shop")} class='nav-logo-title'>
+                <img src={Logo} alt="shopper-logo" class="nav-logo" />
+                <p class="nav-title">SHOPPER</p>
+            </div></Link>
 
-            <ul className='nav-menu'>
+            <ul class='nav-menu'>
                 <li onClick={() => setMenu("shop")} ><Link style={{ textDecoration: 'none' }} to="/">Shop</Link> {menu === "shop" ? <hr /> : <></>} </li>
                 <li onClick={() => setMenu("men")} ><Link style={{ textDecoration: 'none' }} to="/men">Men</Link>{menu === "men" ? <hr /> : <></>}</li>
                 <li onClick={() => setMenu("women")} ><Link style={{ textDecoration: 'none' }} to="/women">Women</Link>{menu === "women" ? <hr /> : <></>}</li>
                 <li onClick={() => setMenu("kids")} ><Link style={{ textDecoration: 'none' }} to="/kids">Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
             </ul>
-            <div className='nav-login-cart'>
-                <Link to="/login"><button className="nav-login">Login</button></Link>
-                <Link to="/cart"><img src={CartLogo} alt="cart_logo" className="nav-cart" /></Link>
-                <div className="nav-cart-count">{numberInCart()}</div>
+            <div class='nav-login-cart'>
+                <Link to="/signup"><button class="nav-login">Login</button></Link>
+                <Link to="/cart"><img src={CartLogo} alt="cart_logo" class="nav-cart" /></Link>
+                <div class="nav-cart-count">{numberInCart()}</div>
             </div>
         </div>
     )
