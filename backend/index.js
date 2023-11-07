@@ -10,12 +10,26 @@ const clients = mongoose.connect(mongoPort)
     // Access the database
     const db = mongoose.connection.db;
 
+    const newUser = {
+      name: 'value1',
+      email: 'value2',
+      password: 'value3',
+      isAdmin: false,
+      // Add other fields as needed
+    };
+
+    // Insert the new user into the database
+    await db.collection('users').insertOne(newUser);
+
     // List all collections in the database
     const collectionNames = await db.listCollections().toArray();
-
+    const users = await db.collection('users').find().toArray();
     // Extract and print the names of the collections
     const collectionNamesArray = collectionNames.map((collection) => collection.name);
+
     console.log('Collections in the database:', collectionNamesArray);
+    console.log('Users:', users);
+
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
