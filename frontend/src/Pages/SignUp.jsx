@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './CSS/LoginSignup.css'
 import { Link } from 'react-router-dom'
 import { LoginSignupValidation } from '../LoginSignupValidation/SignUp'
 
 export const Signup = () => {
+  const [backendData,setBackensData] = React.useState(''); 
   const [signUpValues, setSignUpValues] = React.useState(
     {
       name: '',
@@ -27,8 +28,23 @@ export const Signup = () => {
     e.preventDefault();
     LoginSignupValidation(signUpValues);
     setErrors(LoginSignupValidation(signUpValues));
+    fetch('http://localhost:3001/users')
+    .then(res => res.json())
+    .then(data =>{
+      setBackensData(data)
+      alert('You have successfully signed up'+ JSON.stringify(data))
+    })
+    console.log(backendData)
 
   }
+
+useEffect(() => {
+   
+   
+      
+    
+},[])
+ 
 
   return (
     <div className="loginsignup">
@@ -44,7 +60,7 @@ export const Signup = () => {
           {errors.password && <div>{errors.password}</div>}
         </div>
         <div className="loginsignup-login">
-          <button onClick={handleSubmit} className='loginsignup-btn'>Continue</button>
+        <button onClick={handleSubmit} className='loginsignup-btn'>Continue</button>
           <p>Already have an account? <Link to='/login' style={{ textDecoration: 'none' }}><span>Login here</span></Link></p>
         </div>
         <div className="loginsignup-agree">
