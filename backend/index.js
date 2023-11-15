@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const { Schema } = mongoose;
 const cors = require('cors');
 const app = express()
 const mongoPort = "mongodb://localhost:27017/e-commerce-app"
@@ -31,12 +32,13 @@ const clients = mongoose.connect(mongoPort)
 
     // List all collections in the database
     const collectionNames = await db.listCollections().toArray();
-    const users = await db.collection('users').find().toArray();
+    const products = await db.collection('products').find().toArray();
     // Extract and print the names of the collections
     const collectionNamesArray = collectionNames.map((collection) => collection.name);
 
     console.log('Collections in the database:', collectionNamesArray);
     // console.log('Users:', users);
+    console.log('Products:', products);
 
   })
   .catch((error) => {
@@ -68,4 +70,20 @@ app.get('/users', async (req, res) => {
     res.status(500).send('Server Error');
   }
 })
+
+
+// app.get('/products', async (req, res) => {
+//   try {
+//     let products = [];
+//     // Query MongoDB to get the data
+//     const db = await mongoose.connection.db;
+//     products = await db.collection('products').find().toArray();
+//     // res.send('Hello World!')
+//     console.log('products:', products);
+//     res.status(200).json(products);
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).send('Server Error');
+//   }
+// })
 
