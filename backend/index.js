@@ -14,7 +14,8 @@ mongoose.connect(mongoPort);
 const usersSchema = new mongoose.Schema({
   name: String,
   email: String,
-  password: String, // Add this field for the image path
+  password: String,
+  isAdmin: Boolean
 });
 
 //Create a model for the products collection
@@ -22,7 +23,7 @@ const Users = mongoose.model('users', usersSchema);
 module.exports = Users;
 
 //delete all products from the collection
-Users.deleteMany({ name: "value1" })
+Users.deleteMany({ name: "oran"  })
   .then(() => {
     console.log('All products deleted successfully');
   })
@@ -41,6 +42,26 @@ app.get('/users', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
+app.use(express.json()); // To parse JSON in the request body
+
+app.post('/users', (req, res) => {
+    const dataFromClient = req.body;
+    // Process and save data to MongoDB
+    Users.insertMany(dataFromClient)
+        .then(() => {
+            console.log('New user inserted successfully');
+        })
+        .catch((error) => {
+            console.error('Error inserting new user:', error);
+        });
+    // Respond to the client
+    res.json({ message: 'Data received successfully' });
+});
+
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
