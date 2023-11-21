@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-// // import all_product from '../Components/Assets/all_product.js'
+import all_product from '../Components/Assets/all_product.js'
 // import p1_img from "../Components/Assets/product_1.png";
 // import p2_img from "../Components/Assets/product_2.png";
 // import p3_img from "../Components/Assets/product_3.png";
@@ -40,23 +40,18 @@ import React, { createContext } from "react";
 
 export const ShopContext = createContext(null);
 
-
-
-
-
-
 export const ShopContextProvider = (props) => {
 
    
-    const [all_product, set_All_Product] = React.useState("")
+    // const [all_product, set_All_Product] = React.useState("")
 
-        React.useEffect(()=>{
-            fetch('http://localhost:3002/products')
-            .then(res => res.json())
-            .then(data =>{
-                set_All_Product(data)
-            })
-        },[])
+    //     React.useEffect(()=>{
+    //         fetch('http://localhost:3002/products')
+    //         .then(res => res.json())
+    //         .then(data =>{
+    //             set_All_Product(data)
+    //         })
+    //     },[])
         
         const getDefaultCart = () => {
             let cart = {};

@@ -1,89 +1,47 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const { Schema } = mongoose;
 const cors = require('cors');
+const { Schema } = mongoose;
 const app = express()
 const mongoPort = "mongodb://localhost:27017/e-commerce-app"
 const port = 3001
 
 app.use(cors());
 
-const newUser = {
-  name: 'value1',
-  email: 'value2',
-  password: 'value3',
-  isAdmin: false,
-  // Add other fields as needed
-};
+mongoose.connect(mongoPort);
 
+// Create a schema for the products collection
+const usersSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String, // Add this field for the image path
+});
+
+//Create a model for the products collection
+const Users = mongoose.model('users', usersSchema);
+module.exports = Users;
+
+//delete all products from the collection
+Users.deleteMany({ name: "value1" })
+  .then(() => {
+    console.log('All products deleted successfully');
+  })
+  .catch((error) => {
+    console.error('Error deleting products:', error);
+  });
+
+app.get('/users', async (req, res) => {
+  try {
+    const users = await Users.find();
+    res.json(users);
+   //insert data from client to mongodb
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-
-const clients = mongoose.connect(mongoPort)
-  .then(async () => {
-    // Access the database
-    const db = mongoose.connection.db;
-
-    // Insert the new user into the database
-    // await db.collection('users').insertOne(newUser);
-
-    // List all collections in the database
-    const collectionNames = await db.listCollections().toArray();
-    const products = await db.collection('products').find().toArray();
-    // Extract and print the names of the collections
-    const collectionNamesArray = collectionNames.map((collection) => collection.name);
-
-    console.log('Collections in the database:', collectionNamesArray);
-    // console.log('Users:', users);
-    console.log('Products:', products);
-
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
-
-  
-
-// const dataSchema = new mongoose.Schema({
-//   // Define your data structure here
-//   name: String,
-//   email: String,
-//   password: String,
-// });
-
-// const Data = mongoose.model('Data', dataSchema);
-
-app.get('/users', async (req, res) => {
-  try {
-    let users = [];
-    // Query MongoDB to get the data
-    const db = await mongoose.connection.db;
-    users = await db.collection('users').find().toArray();
-    // res.send('Hello World!')
-    console.log('Users:', users);
-    res.status(200).json(users);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send('Server Error');
-  }
-})
-
-
-// app.get('/products', async (req, res) => {
-//   try {
-//     let products = [];
-//     // Query MongoDB to get the data
-//     const db = await mongoose.connection.db;
-//     products = await db.collection('products').find().toArray();
-//     // res.send('Hello World!')
-//     console.log('products:', products);
-//     res.status(200).json(products);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).send('Server Error');
-//   }
-// })
-

@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
     id: Number,
     name: String,
     category: String,
-    imagePath: String, // Add this field for the image path
+    image: String, // Add this field for the image path
     new_price: Number,
     old_price: Number,
 });
@@ -35,7 +35,7 @@ module.exports = Product;
 //         console.error('Error inserting new products:', error);
 //     });
 
-// delete all products from the collection
+// //delete all products from the collection
 // Product.deleteMany()
 //     .then(() => {
 //         console.log('All products deleted successfully');
