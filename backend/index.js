@@ -23,7 +23,7 @@ const Users = mongoose.model('users', usersSchema);
 module.exports = Users;
 
 //delete all products from the collection
-Users.deleteMany({ name: "oran"  })
+Users.deleteMany({ name: "Eden"  })
   .then(() => {
     console.log('All products deleted successfully');
   })
@@ -35,7 +35,8 @@ app.get('/users', async (req, res) => {
   try {
     const users = await Users.find();
     res.json(users);
-   //insert data from client to mongodb
+   //check if email and password are exist in the database
+   
 
   } catch (error) {
     console.error(error);
@@ -45,18 +46,26 @@ app.get('/users', async (req, res) => {
 
 app.use(express.json()); // To parse JSON in the request body
 
-app.post('/users', (req, res) => {
-    const dataFromClient = req.body;
-    // Process and save data to MongoDB
-    Users.insertMany(dataFromClient)
-        .then(() => {
-            console.log('New user inserted successfully');
-        })
-        .catch((error) => {
-            console.error('Error inserting new user:', error);
-        });
-    // Respond to the client
-    res.json({ message: 'Data received successfully' });
+app.post('/users', async (req, res) => {
+  const dataFromClient = req.body;
+
+  try {
+      // Check if email or password exists
+      const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+
+      if (!userExist) {
+          // Process and save data to MongoDB
+          await Users.insertMany(dataFromClient);
+          console.log('User added successfully');
+          res.json({ message: 'User added successfully' });
+      } else {
+          console.log('Email or Password already exist');
+          res.status(400).json({ message: 'Email or Password already exist' });
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
 });
 
 

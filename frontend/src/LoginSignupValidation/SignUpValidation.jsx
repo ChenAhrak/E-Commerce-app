@@ -2,7 +2,7 @@ export const SignUpValidation = (loginSignUpValues) => {
    
     const isValidEmail = (email) => {
         // This is a basic regular expression for email validation
-        const emailRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const emailRegex =  /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
         return emailRegex.test(email);
     };
 

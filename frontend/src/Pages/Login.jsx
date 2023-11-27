@@ -30,6 +30,7 @@ export const Login = () => {
 
     return (
         <div className="loginsignup">
+           <div className="login">
             <div className='loginsignup-container'>
                 <h1>Login</h1>
                 <div className="loginsignup-fields">
@@ -41,6 +42,7 @@ export const Login = () => {
                 <div className="loginsignup-login">
                     <button className='loginsignup-btn' onClick={handleSubmit}>Continue</button>
                 </div>
+            </div>
             </div>
         </div>
     )

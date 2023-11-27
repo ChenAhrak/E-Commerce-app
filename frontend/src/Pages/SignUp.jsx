@@ -6,56 +6,58 @@ import { SignUpValidation } from '../LoginSignupValidation/SignUpValidation'
 export const Signup = () => {
 
   const [errors, setErrors] = React.useState({});
-  const [backendData, setBackensData] = React.useState('');
+  const [backendData, setBackensData] = React.useState([]);
   const [signUpValues, setSignUpValues] = React.useState(
     {
       name: '',
       email: '',
       password: '',
-      agree:false,
+      agree: false,
       isAdmin: false
     }
   )
 
 
-  
+
   const handleChange = (e) => {
     setSignUpValues(prevValues => {
-      const { name, value,checked,type } = e.target;
+      const { name, value, checked, type } = e.target;
       return {
         ...prevValues,
         [name]: value,
-        [name]:type==='checkbox'?checked:value
+        [name]: type === 'checkbox' ? checked : value
       }
     })
- 
+
   }
- 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    SignUpValidation(signUpValues);
-    setErrors(SignUpValidation(signUpValues))
-    
-    // fetch('http://localhost:3001/users')
-    // .then(res => res.json())
-    // .then(data =>{
-    //   setBackensData(data)
-    //   alert('You have successfully signed up'+ JSON.stringify(data))
-    // })
-    // console.log(backendData)
-    // fetch('http://localhost:3001/users', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(signUpValues),
+    const validationErrors = SignUpValidation(signUpValues);
+    setErrors(validationErrors);
 
-    // })      
+    if (errors.name === undefined && errors.email === undefined && errors.password === undefined && errors.agree === undefined) {
+      fetch('http://localhost:3001/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signUpValues),
 
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message)
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
 
   }
 
- 
+
+
 
   return (
     <div className="loginsignup">
@@ -75,10 +77,10 @@ export const Signup = () => {
           <p>Already have an account? <Link to='/login' style={{ textDecoration: 'none' }}><span>Login here</span></Link></p>
         </div>
         <div className="loginsignup-agree">
-          <input type="checkbox" name='agree' id=''  onChange={handleChange} />
+          <input type="checkbox" name='agree' id='' onChange={handleChange} />
           <p>By countuning, i agree to the terms</p>
         </div>
-          {errors.agree && <div className='loginsignup-errors'>{errors.agree}</div>}
+        {errors.agree && <div className='loginsignup-errors'>{errors.agree}</div>}
       </div>
 
     </div>
