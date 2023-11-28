@@ -24,8 +24,8 @@ export const Navbar = () => {
                 <li onClick={() => setMenu("kids")} ><Link style={{ textDecoration: 'none' }} to="/kids">Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
             </ul>
             <div class='nav-login-cart'>
-                <Link to="/signup"><button class="nav-login">Login</button></Link>
-                <Link to="/cart"><img src={CartLogo} alt="cart_logo" class="nav-cart" /></Link>
+                <Link to="/signup"><button onClick={() => setMenu("signUp")} class="nav-login">Login</button></Link>
+                <Link to="/cart"><img onClick={() => setMenu("cart")} src={CartLogo} alt="cart_logo" class="nav-cart" /></Link>
                 <div class="nav-cart-count">{numberInCart()}</div>
             </div>
         </div>

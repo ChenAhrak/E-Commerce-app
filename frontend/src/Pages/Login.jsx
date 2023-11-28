@@ -21,12 +21,23 @@ export const Login = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit =  (e) => {
         e.preventDefault();
-        LoginValidation(signUpValues);
-        setErrors(LoginValidation(signUpValues))
-    }
-
+        const validationErrors = LoginValidation(signUpValues);
+        setErrors(validationErrors);
+    
+        if (validationErrors.name === undefined && validationErrors.email === undefined && validationErrors.password === undefined && validationErrors.agree === undefined) {
+          fetch('http://localhost:3001/users')
+            .then(res => res.json())
+            .then(data => {
+              alert(data.message)
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });    }
+    
+      }
+    
 
     return (
         <div className="loginsignup">

@@ -31,7 +31,7 @@ export const Signup = () => {
 
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     const validationErrors = SignUpValidation(signUpValues);
     setErrors(validationErrors);

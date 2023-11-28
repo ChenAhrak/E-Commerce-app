@@ -32,10 +32,16 @@ module.exports = Users;
 //   });
 
 app.get('/users', async (req, res) => {
+  const dataFromClient = req.body;
   try {
-    const users = await Users.find();
-    res.json(users);
-   //check if email and password are exist in the database
+    //check if email and password are exist in the database
+    const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+    if (!userExist) {
+        res.json({ message: 'Email or Password are not exist go and sign up' });
+    }
+    else {
+        res.json({ message: 'Email and Password are exist' });
+    }
    
 
   } catch (error) {
