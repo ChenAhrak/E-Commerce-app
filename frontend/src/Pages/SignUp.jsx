@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './CSS/LoginSignup.css'
 import { Link } from 'react-router-dom'
 import { SignUpValidation } from '../LoginSignupValidation/SignUpValidation'
@@ -6,7 +6,7 @@ import { SignUpValidation } from '../LoginSignupValidation/SignUpValidation'
 export const Signup = () => {
 
   const [errors, setErrors] = React.useState({});
-  const [backendData, setBackensData] = React.useState([]);
+  // const [backendData, setBackensData] = React.useState([]);
   const [signUpValues, setSignUpValues] = React.useState(
     {
       name: '',
@@ -36,14 +36,14 @@ export const Signup = () => {
     const validationErrors = SignUpValidation(signUpValues);
     setErrors(validationErrors);
 
-    if (errors.name === undefined && errors.email === undefined && errors.password === undefined && errors.agree === undefined) {
+    if (validationErrors.name === undefined && validationErrors.email === undefined && validationErrors.password === undefined && validationErrors.agree === undefined) {
       fetch('http://localhost:3001/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(signUpValues),
-
+  
       })
         .then(res => res.json())
         .then(data => {
@@ -51,10 +51,13 @@ export const Signup = () => {
         })
         .catch((error) => {
           console.error('Error:', error);
-        });
-    }
+        });    }
 
   }
+
+  
+
+
 
 
 

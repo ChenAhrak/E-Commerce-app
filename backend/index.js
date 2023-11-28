@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const cors = require('cors');
 const { Schema } = mongoose;
 const app = express()
-const mongoPort = "mongodb://localhost:27017/e-commerce-app"
 const port = 3001
+const mongoPort = "mongodb://localhost:27017/e-commerce-app"
 
 app.use(cors());
 
@@ -22,14 +22,14 @@ const usersSchema = new mongoose.Schema({
 const Users = mongoose.model('users', usersSchema);
 module.exports = Users;
 
-//delete all products from the collection
-Users.deleteMany({ name: "Eden"  })
-  .then(() => {
-    console.log('All products deleted successfully');
-  })
-  .catch((error) => {
-    console.error('Error deleting products:', error);
-  });
+// //delete all products from the collection
+// Users.deleteMany({ name: "Eden"  })
+//   .then(() => {
+//     console.log('All products deleted successfully');
+//   })
+//   .catch((error) => {
+//     console.error('Error deleting products:', error);
+//   });
 
 app.get('/users', async (req, res) => {
   try {
@@ -51,8 +51,7 @@ app.post('/users', async (req, res) => {
 
   try {
       // Check if email or password exists
-      const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
-
+      const userExist =  await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
       if (!userExist) {
           // Process and save data to MongoDB
           await Users.insertMany(dataFromClient);
