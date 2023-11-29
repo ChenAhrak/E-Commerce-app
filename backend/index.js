@@ -9,6 +9,10 @@ const mongoPort = "mongodb://localhost:27017/e-commerce-app"
 app.use(cors());
 
 mongoose.connect(mongoPort);
+//check if the connection with the database is successful
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose is connected!!!!');
+});
 
 // Create a schema for the products collection
 const usersSchema = new mongoose.Schema({
@@ -31,24 +35,24 @@ module.exports = Users;
 //     console.error('Error deleting products:', error);
 //   });
 
-app.get('/users', async (req, res) => {
-  const dataFromClient = req.body;
-  try {
-    //check if email and password are exist in the database
-    const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
-    if (!userExist) {
-        res.json({ message: 'Email or Password are not exist go and sign up' });
-    }
-    else {
-        res.json({ message: 'Email and Password are exist' });
-    }
+// app.get('/users', async (req, res) => {
+//   const dataFromClient = req.body;
+//   try {
+//     //check if email and password are exist in the database
+//     const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+//     if (!userExist) {
+//         res.json({ message: 'Email or Password are not exist go and sign up' });
+//     }
+//     else {
+//         res.json({ message: 'Email and Password are exist' });
+//     }
    
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-});
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 app.use(express.json()); // To parse JSON in the request body
 

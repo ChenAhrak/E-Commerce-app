@@ -1,8 +1,10 @@
 import React from 'react'
 import './CSS/LoginSignup.css'
 import { LoginValidation } from '../LoginSignupValidation/LoginValidation';
+import { Link,useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+    const navigation = useNavigate();
     const [errors, setErrors] = React.useState({});
     const [signUpValues, setSignUpValues] = React.useState(
         {
@@ -26,11 +28,23 @@ export const Login = () => {
         const validationErrors = LoginValidation(signUpValues);
         setErrors(validationErrors);
     
-        if (validationErrors.name === undefined && validationErrors.email === undefined && validationErrors.password === undefined && validationErrors.agree === undefined) {
-          fetch('http://localhost:3001/users')
+        if ( validationErrors.email === undefined && validationErrors.password === undefined ) {
+            fetch('http://localhost:3001/users', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(signUpValues),
+          
+              })
             .then(res => res.json())
             .then(data => {
-              alert(data.message)
+              if(data.message === 'Email or Password already exist'){
+                navigation('/')
+              }
+              else{
+                alert('User not Exist go to Signup')
+              }
             })
             .catch((error) => {
               console.error('Error:', error);
@@ -52,6 +66,7 @@ export const Login = () => {
                 </div>
                 <div className="loginsignup-login">
                     <button className='loginsignup-btn' onClick={handleSubmit}>Continue</button>
+                <p>Back to <Link to='/signup' style={{ textDecoration: 'none' }}><span>SignUp</span></Link></p>
                 </div>
             </div>
             </div>

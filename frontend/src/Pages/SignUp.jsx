@@ -1,10 +1,10 @@
 import React from 'react'
 import './CSS/LoginSignup.css'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { SignUpValidation } from '../LoginSignupValidation/SignUpValidation'
 
 export const Signup = () => {
-
+  const navigate = useNavigate();
   const [errors, setErrors] = React.useState({});
   // const [backendData, setBackensData] = React.useState([]);
   const [signUpValues, setSignUpValues] = React.useState(
@@ -48,6 +48,10 @@ export const Signup = () => {
         .then(res => res.json())
         .then(data => {
           alert(data.message)
+          if(data.message === 'User added successfully'){
+            navigate('/login');
+
+          }
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -56,11 +60,6 @@ export const Signup = () => {
   }
 
   
-
-
-
-
-
 
   return (
     <div className="loginsignup">
