@@ -56,7 +56,7 @@ module.exports = Users;
 
 app.use(express.json()); // To parse JSON in the request body
 
-app.post('/users', async (req, res) => {
+app.post('/signup', async (req, res) => {
   const dataFromClient = req.body;
 
   try {
@@ -70,6 +70,24 @@ app.post('/users', async (req, res) => {
       } else {
           console.log('Email or Password already exist');
           res.status(400).json({ message: 'Email or Password already exist' });
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
+app.post('/login', async (req, res) => {
+  const dataFromClient = req.body;
+
+  try {
+      // Check if email and password exists
+      
+      const userExist =  await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+      if (!userExist) {
+          // Process and save data to MongoDB
+          res.json({ message: 'User not exist go and sign up' });
+      } else {
+          res.status(400).json({ message: 'Welcome!!!' });
       }
   } catch (error) {
       console.error('Error:', error);

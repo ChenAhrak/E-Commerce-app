@@ -37,7 +37,7 @@ export const Signup = () => {
     setErrors(validationErrors);
 
     if (validationErrors.name === undefined && validationErrors.email === undefined && validationErrors.password === undefined && validationErrors.agree === undefined) {
-      fetch('http://localhost:3001/users', {
+      fetch('http://localhost:3001/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

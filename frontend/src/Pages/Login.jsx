@@ -29,7 +29,7 @@ export const Login = () => {
         setErrors(validationErrors);
     
         if ( validationErrors.email === undefined && validationErrors.password === undefined ) {
-            fetch('http://localhost:3001/users', {
+            fetch('http://localhost:3001/login', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -39,8 +39,9 @@ export const Login = () => {
               })
             .then(res => res.json())
             .then(data => {
-              if(data.message === 'Email or Password already exist'){
+              if(data.message === 'Welcome!!!'){
                 navigation('/')
+                alert(data.message)
               }
               else{
                 alert('User not Exist go to Signup')
