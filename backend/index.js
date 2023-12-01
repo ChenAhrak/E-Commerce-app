@@ -46,11 +46,15 @@ app.post('/login', async (req, res) => {
       // Check if email and password exists
       
       const userExist =  await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+      console.log(userExist);
       if (!userExist) {
           // Process and save data to MongoDB
           res.json({ message: 'User not exist go and sign up' });
       } else {
-          res.status(400).json({ message: 'Welcome!!!' });
+            //update the user in the database
+            await Users.updateOne({_id: userExist._id}, {connected: !userExist.connected})
+            console.log('User updated successfully');
+            res.status(400).json({ message: 'Welcome!!!' });
       }
   } catch (error) {
       console.error('Error:', error);

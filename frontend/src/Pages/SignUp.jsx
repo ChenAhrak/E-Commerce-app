@@ -13,7 +13,8 @@ export const Signup = () => {
       email: '',
       password: '',
       agree: false,
-      isAdmin: false
+      isAdmin: false,
+      connected: false,
     }
   )
 
