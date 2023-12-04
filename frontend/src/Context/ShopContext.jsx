@@ -5,7 +5,11 @@ import all_product from '../Components/Assets/all_product.js'
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
-
+//Check if the User is Logged in or not
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
+    const userStatus = () => {
+        setIsUserLoggedIn(prev => !prev)
+    }
    
     // const [all_product, set_All_Product] = React.useState("")
 
@@ -64,7 +68,7 @@ export const ShopContextProvider = (props) => {
     }
 
     return (
-        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart, getTotalsItemsAmount,numberInCart }}>
+        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart, getTotalsItemsAmount,numberInCart,isUserLoggedIn,userStatus }}>
             {props.children}
         </ShopContext.Provider>
     )

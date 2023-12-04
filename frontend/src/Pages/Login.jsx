@@ -2,8 +2,11 @@ import React from 'react'
 import './CSS/LoginSignup.css'
 import { LoginValidation } from '../LoginSignupValidation/LoginValidation';
 import { Link,useNavigate } from 'react-router-dom';
+import { ShopContext } from '../Context/ShopContext';
 
 export const Login = () => {
+
+    const { userStatus} = React.useContext(ShopContext);
     const navigation = useNavigate();
     const [errors, setErrors] = React.useState({});
     const [signUpValues, setSignUpValues] = React.useState(
@@ -40,8 +43,10 @@ export const Login = () => {
             .then(res => res.json())
             .then(data => {
               if(data.message === 'Welcome!!!'){
+                userStatus()
                 navigation('/')
                 alert(data.message)
+                
               }
               else{
                 alert('User not Exist go to Signup')

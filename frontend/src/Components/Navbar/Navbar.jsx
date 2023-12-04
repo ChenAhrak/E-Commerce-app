@@ -8,7 +8,20 @@ import { ShopContext } from '../../Context/ShopContext'
 export const Navbar = () => {
 
     const [menu, setMenu] = React.useState("shop")
-    const { numberInCart } = React.useContext(ShopContext);
+    const { numberInCart,isUserLoggedIn,userStatus } = React.useContext(ShopContext);
+
+    const loginButton = () => {
+        if (isUserLoggedIn) {
+            return (
+                <Link to="/"><button onClick={() => userStatus() } class="nav-login">Logout</button></Link>
+            )
+        }
+        else {
+            return (
+                <Link to="/signup"><button onClick={() => setMenu("signUp")} class="nav-login">Login</button></Link>
+            )
+        }
+    }
 
     return (
         <div class='navbar'>
@@ -24,7 +37,7 @@ export const Navbar = () => {
                 <li onClick={() => setMenu("kids")} ><Link style={{ textDecoration: 'none' }} to="/kids">Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
             </ul>
             <div class='nav-login-cart'>
-                <Link to="/signup"><button onClick={() => setMenu("signUp")} class="nav-login">Login</button></Link>
+                {loginButton()}
                 <Link to="/cart"><img onClick={() => setMenu("cart")} src={CartLogo} alt="cart_logo" class="nav-cart" /></Link>
                 <div class="nav-cart-count">{numberInCart()}</div>
             </div>
