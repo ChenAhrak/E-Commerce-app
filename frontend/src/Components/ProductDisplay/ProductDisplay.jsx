@@ -3,10 +3,24 @@ import './ProductDisplay.css';
 import Star_Icon from '../Assets/star_icon.png'
 import Star_Dull_Icon from '../Assets/star_dull_icon.png'
 import { ShopContext } from '../../Context/ShopContext';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductDisplay = (props) => {
     const { product } = props;
-    const { addToCart } = React.useContext(ShopContext);
+    const { addToCart,isUserLoggedIn } = React.useContext(ShopContext);
+    const navigation = useNavigate();
+
+    const userConnected = ()=>{ //Check if the User is Logged in or not
+        if(isUserLoggedIn){
+            addToCart(product.id)
+        }
+        else{
+            alert('Please Login First')
+            navigation('/login')
+        }
+    
+    }
+
     return (
         <div className='product-display'>
             <div className="product-display-left">
@@ -52,7 +66,7 @@ export const ProductDisplay = (props) => {
                         <div>XXL</div>
                     </div>
                 </div>
-                <button onClick={()=>addToCart(product.id)}>
+                <button onClick={userConnected}>
                     Add to Cart
                 </button>
                 <p className='product-display-category'><span>Category :</span> {product.category} , Hoodie , Jogging </p>

@@ -19,51 +19,70 @@ app.use(cors());
 app.use(express.json()); // To parse JSON in the request body
 
 app.post('/signup', async (req, res) => {
-  const dataFromClient = req.body;
+    const dataFromClient = req.body;
 
-  try {
-      // Check if email or password exists
-      const userExist =  await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
-      if (!userExist) {
-          // Process and save data to MongoDB
-          await Users.insertMany(dataFromClient);
-          console.log('User added successfully');
-          res.json({ message: 'User added successfully' });
-      } else {
-          console.log('Email or Password already exist');
-          res.status(400).json({ message: 'Email or Password already exist' });
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Server error' });
-  }
+    try {
+        // Check if email or password exists
+        const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+        if (!userExist) {
+            // Process and save data to MongoDB
+            await Users.insertMany(dataFromClient);
+            console.log('User added successfully');
+            res.json({ message: 'User added successfully' });
+        } else {
+            console.log('Email or Password already exist');
+            res.status(200).json({ message: 'Email or Password already exist' });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 app.post('/login', async (req, res) => {
-  const dataFromClient = req.body;
+    const dataFromClient = req.body;
 
-  try {
-      // Check if email and password exists
-      
-      const userExist =  await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
-      console.log(userExist);
-      if (!userExist) {
-          // Process and save data to MongoDB
-          res.json({ message: 'User not exist go and sign up' });
-      } else {
+    try {
+        // Check if email and password exists
+
+        const userExist = await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+        console.log(userExist);
+        if (!userExist) {
+            // Process and save data to MongoDB
+            res.json({ message: 'User not exist go and sign up' });
+        } else {
             //update the user in the database
-            await Users.updateOne({_id: userExist._id}, {connected: !userExist.connected})
+            await Users.updateOne({ _id: userExist._id }, { connected: !userExist.connected })
             console.log('User updated successfully');
-            res.status(400).json({ message: 'Welcome!!!' });
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Server error' });
-  }
+            res.status(200).json({ message: 'Welcome!!!' });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+app.post('/addProduct', async (req, res) => {
+    const dataFromClient = req.body;
+
+    try {
+        //Search for users connected
+        const userConnected = await Users.findOne({ connected: true });
+        if (userConnected) {
+
+            //Add products to cart in the database צריך להוסיף כמה ביחד לא רק אחד
+            await Users.updateOne({ _id: userConnected._id }, { cart: dataFromClient })
+            console.log('Product added successfully', dataFromClient);
+            res.status(200).json({ message: 'Product added successfully' });
+        }
+    }
+    catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 
-
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })

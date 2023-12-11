@@ -8,12 +8,16 @@ import { ShopContext } from '../../Context/ShopContext'
 export const Navbar = () => {
 
     const [menu, setMenu] = React.useState("shop")
-    const { numberInCart,isUserLoggedIn,userStatus } = React.useContext(ShopContext);
+    const { numberInCart,isUserLoggedIn,userStatus,removeAllFromCart } = React.useContext(ShopContext);
 
     const loginButton = () => {
         if (isUserLoggedIn) {
             return (
-                <Link to="/"><button onClick={() => userStatus() } class="nav-login">Logout</button></Link>
+                <Link to="/"><button onClick={() => {
+                    userStatus()
+                    setMenu("shop")
+                    removeAllFromCart()
+                                     } } class="nav-login">Logout</button></Link>
             )
         }
         else {

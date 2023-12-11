@@ -31,9 +31,19 @@ export const ShopContextProvider = (props) => {
 
     const [cartItems, setCartItems] = React.useState(getDefaultCart());
     const addToCart = (itemId) => {
+        const currentItem = all_product.find((product) => product.id === Number(itemId));
+        console.log(currentItem)
         setCartItems((prev) => {
             return { ...prev, [itemId]: prev[itemId] + 1 };
         });
+        fetch('http://localhost:3001/addProduct', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({currentItem}),
+      
+          })
     }
 
     const removeFromCart = (itemId) => {
@@ -44,6 +54,11 @@ export const ShopContextProvider = (props) => {
             }
             return cart;
         });
+    }
+
+    const removeAllFromCart = () => {
+        setCartItems(getDefaultCart());
+
     }
 
     const getTotalsItemsAmount = () => {
@@ -68,7 +83,7 @@ export const ShopContextProvider = (props) => {
     }
 
     return (
-        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart, getTotalsItemsAmount,numberInCart,isUserLoggedIn,userStatus }}>
+        <ShopContext.Provider value={{ all_product, cartItems, addToCart, removeFromCart,removeAllFromCart, getTotalsItemsAmount,numberInCart,isUserLoggedIn,userStatus }}>
             {props.children}
         </ShopContext.Provider>
     )
