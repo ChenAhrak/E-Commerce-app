@@ -62,7 +62,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/addProduct', async (req, res) => {
+app.post('/addProductToCart', async (req, res) => {
     const dataFromClient = req.body;
 
     try {
@@ -70,8 +70,8 @@ app.post('/addProduct', async (req, res) => {
         const userConnected = await Users.findOne({ connected: true });
         if (userConnected) {
 
-            //Add products to cart in the database צריך להוסיף כמה ביחד לא רק אחד
-            await Users.updateOne({ _id: userConnected._id }, { cart: dataFromClient })
+            //Update the cart field in the database with the new product and the user connected 
+            await Users.updateOne({ _id: userConnected._id }, { $push: { cart: dataFromClient } })
             console.log('Product added successfully', dataFromClient);
             res.status(200).json({ message: 'Product added successfully' });
         }

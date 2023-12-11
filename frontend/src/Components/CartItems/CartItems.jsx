@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 export default function CartItems() {
     const { all_product, cartItems, removeFromCart, getTotalsItemsAmount } = React.useContext(ShopContext);
 
+    
+
     const cartItemsDisplay = () => {
         return all_product ? (
             all_product.map((item) => {

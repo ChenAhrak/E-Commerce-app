@@ -14,7 +14,7 @@ const usersSchema = new mongoose.Schema({
   password: String,
   isAdmin: Boolean,
   connected: Boolean,
-  cart: Object,
+  cart: Array,
 });
 
 //Create a model for the products collection
