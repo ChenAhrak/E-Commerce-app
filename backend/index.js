@@ -64,7 +64,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/addProductToCart', async (req, res) => {
     const dataFromClient = req.body;
-
+    console.log("In Server");
     try {
         //Search for users connected
         const userConnected = await Users.findOne({ connected: true });
@@ -82,6 +82,24 @@ app.post('/addProductToCart', async (req, res) => {
     }
 });
 
+app.delete("/removeProductFromCart" , async (req, res) => {
+    const dataProductToDelete = req.body;
+    try {
+
+const userConnected = await Users.findOne({ connected: true });
+        if (userConnected) {
+
+            await Users.updateOne({ _id: userConnected._id }, { $pull: { cart: dataProductToDelete } })
+            console.log('Product deleted successfully', dataProductToDelete);
+            res.status(200).json({ message: 'Product deleted successfully' });
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
+        
+    }
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

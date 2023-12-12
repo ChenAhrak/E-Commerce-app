@@ -35,7 +35,7 @@ export const ShopContextProvider = (props) => {
         setCartItems((prev) => {
             return { ...prev, [itemId]: prev[itemId] + 1 };
         });
-        fetch('http://localhost:3001//addProductToCart', {
+        fetch('http://localhost:3001/addProductToCart', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -46,6 +46,8 @@ export const ShopContextProvider = (props) => {
     }
 
     const removeFromCart = (itemId) => { //////not finished
+        const currentItem = all_product.find((product) => product.id === Number(itemId));
+
         setCartItems((prev) => {
             let cart = { ...prev };
             if (cart[itemId] > 0) {
@@ -53,12 +55,12 @@ export const ShopContextProvider = (props) => {
             }
             return cart;
         });
-        fetch('http://localhost:3001//removeProductFromCart', {
-            method: 'POST',
+        fetch('http://localhost:3001/removeProductFromCart', {
+            method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({itemId}),
+            body: JSON.stringify({currentItem}),
       
           })
     }
