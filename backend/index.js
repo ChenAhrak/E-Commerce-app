@@ -53,7 +53,7 @@ app.post('/login', async (req, res) => {
         } else {
             //update the user in the database
             await Users.updateOne({ _id: userExist._id }, { connected: !userExist.connected })
-            console.log('User updated successfully');
+            console.log('User Connected successfully');
             res.status(200).json({ message: 'Welcome!!!' });
         }
     } catch (error) {
@@ -98,6 +98,23 @@ const userConnected = await Users.findOne({ connected: true });
         console.error('Error:', error);
         res.status(500).json({ message: 'Server error' });
         
+    }
+});
+
+
+app.put("/updateUserStatus" , async (req, res) => {
+    const userLoggedin = req.body;
+    try {
+        const userConnected = await Users.findOne({ connected: true });
+        if(userConnected){
+            
+        await Users.updateOne({ _id: userConnected._id }, { connected: !userLoggedin.isUserLoggedIn })
+        console.log('User Status updated successfully');
+        res.status(200).json({ message: 'User Status updated successfully' });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 

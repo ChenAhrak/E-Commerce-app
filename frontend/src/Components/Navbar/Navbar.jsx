@@ -15,6 +15,13 @@ export const Navbar = () => {
             return (
                 <Link to="/"><button onClick={() => {
                     userStatus()
+                    fetch('http://localhost:3001/updateUserStatus', {
+                        method: 'PUT',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({isUserLoggedIn}),
+                      })
                     setMenu("shop")
                     removeAllFromCart()
                                      } } class="nav-login">Logout</button></Link>

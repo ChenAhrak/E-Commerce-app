@@ -30,7 +30,7 @@ export const Login = () => {
         e.preventDefault();
         const validationErrors = LoginValidation(signUpValues);
         setErrors(validationErrors);
-    
+        console.log(validationErrors);
         if ( validationErrors.email === undefined && validationErrors.password === undefined ) {
             fetch('http://localhost:3001/login', {
                 method: 'POST',
@@ -68,7 +68,7 @@ export const Login = () => {
                     <input type="email" placeholder='email' name='email' value={signUpValues.email} onChange={handleChange} />
                     {errors.email && <div className='loginsignup-errors'>{errors.email}</div>}
                     <input type="password" placeholder='Your password' name='password' value={signUpValues.password} onChange={handleChange}/>
-                    {errors.email && <div className='loginsignup-errors'>{errors.password}</div>}
+                    {errors.password && <div className='loginsignup-errors'>{errors.password}</div>}
                 </div>
                 <div className="loginsignup-login">
                     <button className='loginsignup-btn' onClick={handleSubmit}>Continue</button>
