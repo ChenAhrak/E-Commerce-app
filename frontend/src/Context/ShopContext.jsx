@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext,useEffect } from "react";
 import all_product from '../Components/Assets/all_product.js'
 
 
@@ -29,7 +29,12 @@ export const ShopContextProvider = (props) => {
             return cart;
         }
 
-    const [cartItems, setCartItems] = React.useState(getDefaultCart());
+    const [cartItems, setCartItems] = React.useState(JSON.parse(localStorage.getItem('cartItems'))||getDefaultCart());
+    
+    useEffect(()=>{
+        localStorage.setItem("cartItems",JSON.stringify(cartItems))
+      },[cartItems])
+    
     const addToCart = (itemId) => {
         const currentItem = all_product.find((product) => product.id === Number(itemId));
         setCartItems((prev) => {
