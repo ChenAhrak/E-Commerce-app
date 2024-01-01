@@ -89,22 +89,20 @@ app.delete("/removeProductFromCart", async (req, res) => {
         const userConnected = await Users.findOne({ connected: true });
 
         if (userConnected) {
-            const itemIndex = userConnected.cart.findIndex(item => item.id === dataProductToDelete.currentItem.id);
 
-            if (itemIndex !== -1) {
-                // Remove only one occurrence of the item by index
-                await Users.updateOne(
-                    { _id: userConnected._id },
-                    { $pull: { cart: { $eq: [dataProductToDelete.currentItem] } } }
-                );
+            // Remove only one occurrence of the item by index
+            await Users.updateOne(
+                { _id: userConnected._id },
+                { $pull: { cart: dataProductToDelete } }
+            );
 
-                console.log('Product deleted successfully', dataProductToDelete);
-                res.status(200).json({ message: 'Product deleted successfully' });
-            } else {
-                res.status(404).json({ message: 'Item not found in the cart' });
-            }
+            console.log('Product deleted successfully', dataProductToDelete);
+            res.status(200).json({ message: 'Product deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Item not found in the cart' });
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error:', error);
         res.status(500).json({ message: 'Server error' });
     }
@@ -112,15 +110,15 @@ app.delete("/removeProductFromCart", async (req, res) => {
 
 
 
-app.put("/updateUserStatus" , async (req, res) => {
+app.put("/updateUserStatus", async (req, res) => {
     const userLoggedin = req.body;
     try {
         const userConnected = await Users.findOne({ connected: true });
-        if(userConnected){
-            
-        await Users.updateOne({ _id: userConnected._id }, { connected: !userLoggedin.isUserLoggedIn })
-        console.log('User Status updated successfully');
-        res.status(200).json({ message: 'User Status updated successfully' });
+        if (userConnected) {
+
+            await Users.updateOne({ _id: userConnected._id }, { connected: !userLoggedin.isUserLoggedIn })
+            console.log('User Status updated successfully');
+            res.status(200).json({ message: 'User Status updated successfully' });
         }
     } catch (error) {
         console.error('Error:', error);

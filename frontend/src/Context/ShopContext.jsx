@@ -6,7 +6,12 @@ export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
 //Check if the User is Logged in or not
-    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
+    const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(JSON.parse(localStorage.getItem('isUserLoggedIn')) || [false]);
+
+    useEffect(()=>{
+        localStorage.setItem("isUserLoggedIn",JSON.stringify(isUserLoggedIn))
+    },[isUserLoggedIn])
+
     const userStatus = () => {
         setIsUserLoggedIn(prev => !prev)
     }
@@ -21,6 +26,8 @@ export const ShopContextProvider = (props) => {
     //         })
     //     },[])
         
+  
+
         const getDefaultCart = () => {
             let cart = {};
             for (let i = 1; i < all_product.length + 1; i++) {
