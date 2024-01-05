@@ -90,13 +90,14 @@ app.delete("/removeProductFromCart", async (req, res) => {
 
         if (userConnected) {
 
-            // Remove only one occurrence of the item by index
+            // run and find the product in the cart and delete it
+            const productToDelete = userConnected.cart.find(product => product.id === dataProductToDelete.id);
             await Users.updateOne(
                 { _id: userConnected._id },
-                { $pull: { cart: dataProductToDelete } }
+                { $pull: { cart: productToDelete } }
             );
 
-            console.log('Product deleted successfully', dataProductToDelete);
+            console.log('Product deleted successfully', productToDelete);
             res.status(200).json({ message: 'Product deleted successfully' });
         } else {
             res.status(404).json({ message: 'Item not found in the cart' });

@@ -3,7 +3,6 @@ import './CSS/LoginSignup.css'
 import { LoginValidation } from '../LoginSignupValidation/LoginValidation';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../Context/ShopContext';
-import UseLocalStorage from '../LocalStorage/UseLocalStorage';
 
 export const Login = () => {
 
