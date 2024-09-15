@@ -10,8 +10,12 @@ E-Commerce-App is a web application designed to manage products and users. The b
 
 - Backend: JavaScript, Node.js
 - Frontend: JavaScript, React.js
-- Database: MongoDB
+- Database: MongoDB Compass
 
   ## Demo Video
 
+
+
+
+https://github.com/user-attachments/assets/19a4cf10-357e-4e89-819e-dffdf6b730ff
 
