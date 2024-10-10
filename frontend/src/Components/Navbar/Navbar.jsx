@@ -8,22 +8,23 @@ import { ShopContext } from '../../Context/ShopContext'
 export const Navbar = () => {
 
     const [menu, setMenu] = React.useState("shop")
-    const { numberInCart,isUserLoggedIn,removeAllFromCart,userStatus } = React.useContext(ShopContext);
+    const { numberInCart, isUserLoggedIn, removeAllFromCart, userStatus } = React.useContext(ShopContext);
     const loginButton = () => {
         if (isUserLoggedIn) {
             return (
                 <Link to="/"><button onClick={() => {
                     userStatus()
-                    fetch('http://localhost:3001/updateUserStatus', {
-                        method: 'PUT',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({isUserLoggedIn}),
-                      })
+                    // fetch('http://localhost:3001/updateUserStatus', {
+                    //     method: 'PUT',
+                    //     headers: {
+                    //       'Content-Type': 'application/json',
+                    //     },
+                    //     body: JSON.stringify({isUserLoggedIn}),
+                    //   })
+                    localStorage.removeItem("isUserLoggedIn")
                     setMenu("shop")
                     removeAllFromCart()
-                                     } } class="nav-login">Logout</button></Link>
+                }} class="nav-login">Logout</button></Link>
             )
         }
         else {

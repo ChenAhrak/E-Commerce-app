@@ -22,16 +22,16 @@ app.post('/signup', async (req, res) => {
     const dataFromClient = req.body;
 
     try {
-        // Check if email or password exists
-        const userExist = await Users.findOne({ "$or": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+        // Check if email or password exists                                      Case insensitive 
+        const userExist = await Users.findOne({ email: dataFromClient.email }).collation({ locale: "en", strength: 2 });
         if (!userExist) {
             // Process and save data to MongoDB
             await Users.insertMany(dataFromClient);
             console.log('User added successfully');
             res.json({ message: 'User added successfully' });
         } else {
-            console.log('Email or Password already exist');
-            res.status(200).json({ message: 'Email or Password already exist' });
+            console.log('Email already exist');
+            res.status(200).json({ message: 'Email already exist' });
         }
     } catch (error) {
         console.error('Error:', error);
@@ -45,14 +45,14 @@ app.post('/login', async (req, res) => {
     try {
         // Check if email and password exists
 
-        const userExist = await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] });
+        const userExist = await Users.findOne({ "$and": [{ email: dataFromClient.email }, { password: dataFromClient.password }] })
+            .collation({ locale: "en", strength: 2 });
         console.log(userExist);
         if (!userExist) {
             // Process and save data to MongoDB
             res.json({ message: 'User not exist go and sign up' });
         } else {
             //update the user in the database
-            await Users.updateOne({ _id: userExist._id }, { connected: !userExist.connected })
             console.log('User Connected successfully');
             res.status(200).json({ message: 'Welcome!!!' });
         }

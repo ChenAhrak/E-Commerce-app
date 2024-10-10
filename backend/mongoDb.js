@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const mongoPort = "mongodb://localhost:27017/e-commerce-app";
 mongoose.connect(mongoPort);
-
 //check if the connection with the database is successful
 mongoose.connection.on('connected', () => {
   console.log('Mongoose is connected!!!!');
@@ -14,7 +13,6 @@ const usersSchema = new mongoose.Schema({
   email: String,
   password: String,
   isAdmin: Boolean,
-  connected: Boolean,
   cart: Array,
 });
 

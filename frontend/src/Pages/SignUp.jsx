@@ -1,6 +1,6 @@
 import React from 'react'
 import './CSS/LoginSignup.css'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { SignUpValidation } from '../LoginSignupValidation/SignUpValidation'
 
 export const Signup = () => {
@@ -32,7 +32,7 @@ export const Signup = () => {
 
   }
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = SignUpValidation(signUpValues);
     setErrors(validationErrors);
@@ -44,23 +44,24 @@ export const Signup = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(signUpValues),
-  
+
       })
         .then(res => res.json())
         .then(data => {
           alert(data.message)
-          if(data.message === 'User added successfully'){
+          if (data.message === 'User added successfully') {
             navigate('/login');
 
           }
         })
         .catch((error) => {
           console.error('Error:', error);
-        });    }
+        });
+    }
 
   }
 
-  
+
 
   return (
     <div className="loginsignup">
